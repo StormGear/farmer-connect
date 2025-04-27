@@ -5,6 +5,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import '@coinbase/onchainkit/styles.css'; 
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@radix-ui/themes/styles.css";
 
 const queryClient = new QueryClient();
 
