@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+.custom-light {
+    /* 
+    /* Font and Shape */
+    /* --ock-font-family: 'your-custom-value';
+    --ock-border-radius: 'your-custom-value';
+    --ock-border-radius-inner: 'your-custom-value'; */
+   
+    /* Text Colors */
+    /* --ock-text-inverse: 'your-custom-value';
+    --ock-text-foreground: 'your-custom-value';
+    --ock-text-foreground-muted: 'your-custom-value';
+    --ock-text-error: 'your-custom-value';
+    --ock-text-primary: 'your-custom-value';
+    --ock-text-success: 'your-custom-value';
+    --ock-text-warning: 'your-custom-value';
+    --ock-text-disabled: 'your-custom-value'; */
+   
+    /* Background Colors */
+    /* --ock-bg-default: '#3b7d4a';
+    --ock-bg-default-hover: '#3b7d4a';
+    --ock-bg-default-active: '#3b7d4a';
+    --ock-bg-alternate: '#3b7d4a';
+    --ock-bg-alternate-hover: '#3b7d4a';
+    --ock-bg-alternate-active: '#3b7d4a';
+    --ock-bg-inverse: '#3b7d4a';
+    --ock-bg-inverse-hover: '#3b7d4a';
+    --ock-bg-inverse-active: '#3b7d4a';
+    --ock-bg-primary: '#3b7d4a';
+    --ock-bg-primary-hover: '#3b7d4a';
+    --ock-bg-primary-active: '#3b7d4a';
+    --ock-bg-primary-washed: '#3b7d4a';
+    --ock-bg-primary-disabled: '#3b7d4a';
+    --ock-bg-secondary: '#3b7d4a';
+    --ock-bg-secondary-hover: '#3b7d4a';
+    --ock-bg-secondary-active: '#3b7d4a';
+    --ock-bg-error: '#3b7d4a';
+    --ock-bg-warning: '#3b7d4a';
+    --ock-bg-success: '#3b7d4a';
+    --ock-bg-default-reverse: '#3b7d4a'; */
+   
+    /* Icon Colors */
+    /* --ock-icon-color-primary: '#3b7d4a';
+    --ock-icon-color-foreground: '#3b7d4a';
+    --ock-icon-color-foreground-muted: '#3b7d4a';
+    --ock-icon-color-inverse: 'your-custom-value';
+    --ock-icon-color-error: 'your-custom-value';
+    --ock-icon-color-success: 'your-custom-value';
+    --ock-icon-color-warning: 'your-custom-value'; */
+   
+    /* Border Colors */
+    /* --ock-border-line-primary: 'your-custom-value';
+    --ock-border-line-default: 'your-custom-value';
+    --ock-border-line-heavy: 'your-custom-value';
+    --ock-border-line-inverse: 'your-custom-value'; */
+  }

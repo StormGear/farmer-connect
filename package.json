@@ -10,12 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coinbase/onchainkit": "^0.38.8",
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@tailwindcss/vite": "^4.1.4",
-    "@tanstack/react-query": "^5.74.4",
+    "ethers": "^6.13.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.2",
-    "tailwindcss": "^4.1.4"
+    "tailwindcss": "^4.1.4",
+    "wagmi": "^2.15.0",
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

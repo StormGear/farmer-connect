@@ -22,7 +22,7 @@ const HowItWorks = () => {
     <section id="how-it-works" className="bg-white py-20 px-[5%]">
       <div className="max-w-[1400px] mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-[#3b7d4a] relative inline-block">
+          <h2 className="!text-4xl font-bold text-[#3b7d4a] relative inline-block">
             How It Works
             <span className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-12 h-[3px] bg-[#f7b733]"></span>
           </h2>
