@@ -12,6 +12,7 @@
   "dependencies": {
     "@coinbase/onchainkit": "^0.38.8",
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@hookform/resolvers": "^5.0.1",
     "@radix-ui/themes": "^3.2.1",
     "@tailwindcss/vite": "^4.1.4",
     "class-variance-authority": "^0.7.1",
@@ -19,6 +20,7 @@
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
     "ethers": "^6.13.5",
+    "framer-motion": "^12.9.2",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.503.0",
     "next-themes": "^0.4.6",

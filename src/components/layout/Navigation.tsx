@@ -1,13 +1,22 @@
-
+import { useScrollToSection } from '@/hooks/use-scroll';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const scrollToSection = useScrollToSection();
+
+
+  const handleNavClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, sectionId: string) => {
+    e.preventDefault();
+    scrollToSection(sectionId);
+    setIsMenuOpen(false);
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
 
   return (
     <header className="fixed w-full bg-white shadow-md z-50">
@@ -16,9 +25,23 @@ const Navigation = () => {
           <i className="fas fa-leaf !text-[#72b01d] !mr-2"></i> FarmConnect
         </div>
         <ul className={`md:!flex items-center gap-8 ${isMenuOpen ? '!flex flex-col absolute top-[70px] left-0 w-full bg-white shadow-md p-4' : 'hidden md:flex'}`}>
-          <li><Link to="#features" className="hover:text-[#3b7d4a] font-medium">Features</Link></li>
-          <li><Link to="#how-it-works" className="hover:text-[#3b7d4a] font-medium">How It Works</Link></li>
-          <li><Link to="#testimonials" className="hover:text-[#3b7d4a] font-medium">Testimonials</Link></li>
+          <li className="hover:text-[#3b7d4a] font-medium" onClick={(e) => handleNavClick(e, 'features')}>Features</li>
+        
+          <li className="hover:text-[#3b7d4a] font-medium" onClick={(e) => handleNavClick(e, 'how-it-works')}>How It Works</li>
+          <li className="md:ml-4 flex gap-4">
+            <Link 
+              to="/login" 
+              className="px-4 py-2 text-[#3b7d4a] border border-[#3b7d4a] rounded-lg hover:bg-[#3b7d4a] hover:text-white transition-colors"
+            >
+              Login
+            </Link>
+            <Link 
+              to="/signup" 
+              className="px-4 py-2 bg-[#3b7d4a] text-white rounded-lg hover:bg-[#2d6138] transition-colors"
+            >
+              Sign Up
+            </Link>
+          </li>
         </ul>
         <button className="md:hidden text-2xl" onClick={toggleMenu}>
           <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
