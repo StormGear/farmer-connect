@@ -3,7 +3,6 @@ export interface User {
     email: string;
     role: 'farmer' | 'buyer';
     name?: string;
-    token: string;
   }
 
  export interface UserContextType {
@@ -11,4 +10,8 @@ export interface User {
     setUser: (user: User | null) => void;
     logout: () => void;
     isLoading: boolean;
+  }
+
+  interface InputUser extends User {
+    password: string;
   }

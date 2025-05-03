@@ -4,6 +4,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Spinner } from "@radix-ui/themes";
+
+
 
 const loginSchema = z.object({
   email: z
@@ -26,13 +30,19 @@ const Login = () => {
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
-    const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const onSubmit = (data: LoginForm) => {
+  const onSubmit = async (data: LoginForm) => {
+    // Simulate a login process
+    setLoading(true);
+
+   
+   
     console.log(data);
     // Handle login submission here
     // navigate("/farmer/dashboard");
-    navigate("/products");
+    // navigate("/products");
   };
 
   return (
@@ -116,10 +126,16 @@ const Login = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            
+            disabled={loading}
             className="w-full py-3 !bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
           >
-            Log In
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <Spinner />
+              </div>
+            ) : (
+              "Login"
+            )}
           </motion.button>
         </form>
 
@@ -140,3 +156,4 @@ const Login = () => {
 };
 
 export default Login;
+

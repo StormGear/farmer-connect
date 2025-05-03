@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Spinner } from "@radix-ui/themes";
+import { addUser } from "@/api/user_auth";
+import { toast } from "react-hot-toast";
+
 
 const signupSchema = z.object({
     email: z
@@ -23,22 +28,45 @@ const signupSchema = z.object({
   role: z.enum(["farmer", "buyer"], {
     required_error: "Please select a role",
   }),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces"),
 });
 
-type SignupForm = z.infer<typeof signupSchema>;
+export type SignupForm = z.infer<typeof signupSchema>;
 
 const Signup = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<SignupForm>({
     resolver: zodResolver(signupSchema),
   });
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (data: SignupForm) => {
-    console.log(data);
-    // Handle form submission here
+  const onSubmit = async (data: SignupForm) => {
+    try {
+      setLoading(true);
+      const res = await addUser(data);
+      if (!res.success) {
+        throw new Error(res.message);
+      }
+      toast.success('Registered Successfully!')
+      reset();
+
+    } catch (e) {
+      console.log(`Error logging in.. ${e}`);
+      toast.error(`Error logging in.. ${e}`)
+
+
+    } finally {
+      setLoading(false);
+
+    }
+    
   };
 
   return (
@@ -67,7 +95,7 @@ const Signup = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-          >
+          > 
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email
             </label>
@@ -75,10 +103,29 @@ const Signup = () => {
               type="email"
               {...register("email")}
               className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 ${ errors.email ? '!border-red-500' : 'border-gray-300 focus:!ring-green-500'} focus:border-transparent outline-none transition-all`}
-              placeholder="Enter your email"
+              placeholder="Enter your name"
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            )}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+          > 
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Name
+            </label>
+            <input
+              type="name"
+              {...register("name")}
+              className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 ${ errors.name? '!border-red-500' : 'border-gray-300 focus:!ring-green-500'} focus:border-transparent outline-none transition-all`}
+              placeholder="Enter your email"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
           </motion.div>
 
@@ -133,7 +180,13 @@ const Signup = () => {
             type="submit"
             className="w-full py-3 !bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
           >
-            Sign Up
+             {loading ? (
+              <div className="flex items-center justify-center">
+                <Spinner />
+              </div>
+            ) : (
+              "Sign Up"
+            )}
           </motion.button>
         </form>
 
