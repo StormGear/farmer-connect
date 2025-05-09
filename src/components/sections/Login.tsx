@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Spinner } from "@radix-ui/themes";
+import toast from "react-hot-toast";
+import { loginUser } from "@/api/user_auth";
+import { useUser } from "@/auth/context/UserProvider";
 
 
 
@@ -20,29 +23,68 @@ const loginSchema = z.object({
     .min(1, "Password is required"),
 });
 
-type LoginForm = z.infer<typeof loginSchema>;
+export type LoginFormData = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>({
+    reset,
+  } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
-  const onSubmit = async (data: LoginForm) => {
+  const onSubmit = async (data: LoginFormData) => {
+    try {
     // Simulate a login process
     setLoading(true);
+    const res = await loginUser(data);
+    if (!res.success) {
+      throw new Error(res.message);
+    }
+    toast.success('Logged in Successfully!', {
+      position: "top-right",
+    })
+    if (res.data?.role === "farmer") {
+      toast.success('Welcome Farmer!', {
+        position: "top-right",
+      })
+      // set user state in context
+      const user = {
+        email: res.data.email,
+        name: res.data.name,
+        role: res.data.role,
+        id: res.data.id,
+      }
+      setUser(user);
+      navigate("/farmer/dashboard");
+    }
+    else if (res.data?.role === "buyer") {
+      toast.success('Welcome Buyer!', {
+        position: "top-right",
+      })
+      navigate("/products");
+    } else {
+      toast.error('Invalid role!', {
+        position: "top-right",
+      })
+      navigate("/");
+    }
+    reset();
 
-   
-   
     console.log(data);
-    // Handle login submission here
-    // navigate("/farmer/dashboard");
-    // navigate("/products");
+    }
+    catch (error) {
+      console.error("Login failed:", error);
+      toast.error(`Login failed. ${error}`);
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (

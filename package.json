@@ -11,8 +11,12 @@
   },
   "dependencies": {
     "@coinbase/onchainkit": "^0.38.8",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@hookform/resolvers": "^5.0.1",
+    "@mui/icons-material": "^7.1.0",
+    "@mui/material": "^7.1.0",
     "@radix-ui/themes": "^3.2.1",
     "@tailwindcss/vite": "^4.1.4",
     "bcryptjs": "^3.0.2",

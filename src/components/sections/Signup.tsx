@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Spinner } from "@radix-ui/themes";
 import { addUser } from "@/api/user_auth";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
 const signupSchema = z.object({
@@ -46,6 +47,7 @@ const Signup = () => {
     resolver: zodResolver(signupSchema),
   });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (data: SignupForm) => {
     try {
@@ -56,10 +58,12 @@ const Signup = () => {
       }
       toast.success('Registered Successfully!')
       reset();
+      navigate("/login");
+
 
     } catch (e) {
-      console.log(`Error logging in.. ${e}`);
-      toast.error(`Error logging in.. ${e}`)
+      console.log(`Error signing up.. ${e}`);
+      toast.error(`Error signing up.. ${e}`)
 
 
     } finally {
