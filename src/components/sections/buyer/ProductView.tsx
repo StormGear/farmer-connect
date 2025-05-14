@@ -20,7 +20,7 @@ const ProductView = () => {
     // Implement cart functionality
     console.log('Adding to cart:', productId);
   };
-  const { user } = useUser();
+  const { user} = useUser();
 
    const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);

@@ -92,6 +92,39 @@ export const uploadProduce = async (produce: Produce) => {
     }
 }
 
+export const getAllProduceItems = async () => {
+    try {
+        const docRef = collection(db, "produce");
+        const querySnapshot = await getDocs(docRef);
+        if (querySnapshot.empty) {
+            console.log("No such document!");
+            return {
+                success: true,
+                message: `No such document!`,
+            }
+        }
+
+        return {
+            success: true,
+            message: `File retrieved successfully`,
+            data: querySnapshot.docs.map((doc) => {
+                return {
+                    id: doc.id,
+                    ...doc.data(),
+                };
+            }),
+        };
+    }
+    catch (error) {
+        console.error('Error retrieving file:', error);
+        toast.error("Error retrieving file: " + error);
+        return {
+            success: false,
+            message: `Error retrieving file: ${error}`,
+        }
+    }
+}
+
 export const getProduceItemsFromFirestore = async (userId: string) => {
     try {
         const docRef = collection(db, "produce");

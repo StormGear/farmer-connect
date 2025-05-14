@@ -12,6 +12,7 @@ import { useUser } from "@/auth/context/UserProvider";
 
 
 
+
 const loginSchema = z.object({
   email: z
     .string()
@@ -205,6 +206,8 @@ const Login = () => {
     </div>
   );
 };
+
+
 
 export default Login;
 

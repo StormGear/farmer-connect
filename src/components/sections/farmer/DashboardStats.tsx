@@ -19,7 +19,7 @@ const DashboardStats = () => {
           toast.error('Error fetching produce items: ' + response.message);
         } else {
           console.log('Fetched produce items:', response.data);
-          toast.success('Fetched produce items successfully');
+          // toast.success('Fetched produce items successfully');
         }
        
       }
@@ -89,92 +89,67 @@ const DashboardStats = () => {
         <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Produce</h3>
         <div className="bg-white shadow overflow-hidden rounded-lg">
           {/* Add your produce list table here */}
-          {produceItems && produceItems.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-green-50">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-green-800 uppercase tracking-wider">
-                      Image
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-green-800 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-green-800 uppercase tracking-wider">
-                      Price
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-green-800 uppercase tracking-wider">
-                      Added On
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-green-800 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-green-800 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {produceItems.map((item, index) => (
-                    <motion.tr 
-                      key={item.id || index}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="hover:bg-green-50 transition-colors"
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex-shrink-0 h-10 w-10">
-                          {item.images && item.images.length > 0 ? (
-                            <img 
-                              className="h-10 w-10 rounded-full object-cover" 
-                              src={item.images[0]} 
-                              alt={item.produce_name} 
-                            />
-                          ) : (
-                            <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-500">
-                              <i className="fas fa-seedling"></i>
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{item.produce_name}</div>
-                        <div className="text-sm text-gray-500 truncate max-w-[200px]">
-                          {item.produce_description}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">${item.price?.toFixed(2)}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">
-                          {item.upload_date ? new Date(item.upload_date).toLocaleDateString() : 'N/A'}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          Active
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex space-x-2">
-                          <button className="text-indigo-600 hover:text-indigo-900">
-                            <i className="fas fa-edit"></i>
-                          </button>
-                          <button className="text-red-600 hover:text-red-900">
-                            <i className="fas fa-trash"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+         {produceItems && produceItems.length > 0 ? (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {produceItems.map((item, index) => (
+      <motion.div
+        key={item.id || index}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.05 }}
+        className="bg-white rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow"
+      >
+        <div className="relative h-48 bg-green-50">
+          {item.images && item.images.length > 0 ? (
+            <img
+              className="w-full h-full object-cover"
+              src={item.images[0]}
+              alt={item.produce_name}
+            />
           ) : (
-            emptyProduce()
+            <div className="w-full h-full flex items-center justify-center bg-green-50 text-green-500">
+              <i className="fas fa-seedling text-4xl"></i>
+            </div>
           )}
+          <div className="absolute top-2 right-2">
+            <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              Active
+            </span>
+          </div>
+        </div>
+        
+        <div className="p-4">
+          <div className="flex justify-between items-start">
+            <h3 className="text-lg font-medium text-gray-900 mb-1">{item.produce_name}</h3>
+            <p className="text-lg font-bold text-green-600">${item.price?.toFixed(2)}</p>
+          </div>
+          
+          <p className="text-sm text-gray-500 mb-4 line-clamp-2">
+            {item.produce_description}
+          </p>
+          
+          <div className="flex justify-between items-center text-xs text-gray-500">
+            <div>
+              <i className="far fa-calendar-alt mr-1"></i>
+              {item.upload_date ? new Date(item.upload_date).toLocaleDateString() : 'N/A'}
+            </div>
+            
+            <div className="flex space-x-3">
+              <button className="text-indigo-600 hover:text-indigo-900 transition-colors">
+                <i className="fas fa-edit mr-1"></i> Edit
+              </button>
+              <button className="text-red-600 hover:text-red-900 transition-colors">
+                <i className="fas fa-trash mr-1"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+) : (
+  emptyProduce()
+)}
          
         </div>
       </div>
