@@ -1,16 +1,11 @@
+import { MenuItem } from '@/context/MenuProvider';
 import { motion } from 'framer-motion';
 
-interface ProductProps {
-  id: string;
-  name: string;
-  price: number;
-  location: string;
-  image: string;
-  farmer: string;
+interface ProductProps extends MenuItem {
   onAddToCart: (productId: string) => void;
 }
 
-const ProductCard = ({ id, name, price, location, image, farmer, onAddToCart }: ProductProps) => {
+const ProductCard = ({ id, name, price, description, image, onAddToCart }: ProductProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,11 +19,15 @@ const ProductCard = ({ id, name, price, location, image, farmer, onAddToCart }: 
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
+       
+        <p className="text-gray-600 mt-2">
+         {description}
+          </p>
         <p className="text-green-600 font-bold">${price.toFixed(2)}</p>
-        <div className="mt-2 text-sm text-gray-600">
+        {/* <div className="mt-2 text-sm text-gray-600">
           <p>Farmer: {farmer}</p>
           <p>Location: {location}</p>
-        </div>
+        </div> */}
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}

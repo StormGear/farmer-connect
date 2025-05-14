@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import DashboardStats from './DashboardStats'
 import ProduceForm from './ProduceForm';
-import { useUser } from '@/auth/context/UserProvider';
+import { useUser } from '@/context/UserProvider';
 import Repurpose from './Repurpose';
 import LogoutButton from '../Logout';
 import { useNavigate } from 'react-router-dom';

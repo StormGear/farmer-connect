@@ -1,6 +1,10 @@
-import { useUser } from '@/auth/context/UserProvider';
+import { useUser } from '@/context/UserProvider';
 import Navigation from './Navigation';
 import ProductCard from './ProductCard'
+import { useMenu } from '@/context/MenuProvider';
+import { useEffect } from 'react';
+import { getAllProduceItems } from '@/api/produce_upload';
+import toast from 'react-hot-toast';
 
 // Mock data - replace with actual API call
 const mockProducts = [
@@ -16,11 +20,30 @@ const mockProducts = [
 ];
 
 const ProductView = () => {
-  const handleAddToCart = (productId: string) => {
+  const { menuItems, getProduceMenuItems } = useMenu();
+  const { user} = useUser();
+
+   useEffect(() => {
+    const fetchMenuItems = async () => {
+      if (user) {
+        const response = await getProduceMenuItems();
+        if (!response.success) {
+          console.error('Error fetching produce items:', response.message);
+          toast.error('Error fetching produce items: ' + response.message);
+        } else {
+          console.log('Fetched menu items:', response.success);
+          // toast.success('Fetched menu items successfully');
+        }
+       
+      }
+    };
+    fetchMenuItems();
+  }, [user]);
+
+    const handleAddToCart = (productId: string) => {
     // Implement cart functionality
     console.log('Adding to cart:', productId);
   };
-  const { user} = useUser();
 
    const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -39,7 +62,7 @@ const ProductView = () => {
             <h1 className="text-3xl font-bold text-gray-800">Welcome back{ user?.name ? `,${userName}!` : '!'}</h1>
           </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockProducts.map((product) => (
+          {menuItems.map((product) => (
             <ProductCard
               key={product.id}
               {...product}

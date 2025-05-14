@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import produce from '@/assets/produce.svg';
 import dashboardImg from '@/assets/dashboard.png';
 import { useEffect } from 'react';
-import { useUser } from '@/auth/context/UserProvider';
-import { useCart } from '@/auth/context/CartProvider';
+import { useUser } from '@/context/UserProvider';
+import { useCart } from '@/context/CartProvider';
 import toast from 'react-hot-toast';
 
 const DashboardStats = () => {

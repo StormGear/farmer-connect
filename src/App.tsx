@@ -9,13 +9,13 @@ import Signup from "./components/sections/Signup";
 import Login from "./components/sections/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import FarmerDashboard from "./components/sections/farmer/FarmerDashboard";
-import { UserProvider } from "./auth/context/UserProvider";
+import { UserProvider } from "@/context/UserProvider";
 import ProductView from "./components/sections/buyer/ProductView";
 import  { Toaster } from 'react-hot-toast';
 import { ErrorBoundary } from "react-error-boundary";
 import Fallback from "./components/ErrorBoundary";
-import MenuProvider from "./auth/context/MenuProvider";
-import CartProvider from "./auth/context/CartProvider";
+import MenuProvider from "@/context/MenuProvider";
+import CartProvider from "@/context/CartProvider";
 
 const queryClient = new QueryClient();
 

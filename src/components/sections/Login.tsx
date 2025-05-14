@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Spinner } from "@radix-ui/themes";
 import toast from "react-hot-toast";
 import { loginUser } from "@/api/user_auth";
-import { useUser } from "@/auth/context/UserProvider";
+import { useUser } from "@/context/UserProvider";
 
 
 

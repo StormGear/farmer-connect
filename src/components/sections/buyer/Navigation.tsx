@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import LogoutButton from '../Logout';
-import { useUser } from '@/auth/context/UserProvider';
+import { useUser } from '@/context/UserProvider';
 import toast from 'react-hot-toast';
 
 const Navigation = () => {

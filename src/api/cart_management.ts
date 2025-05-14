@@ -1,4 +1,4 @@
-import { useUser } from "@/auth/context/UserProvider";
+import { useUser } from "@/context/UserProvider";
 import { CartItem } from "@/global";
 import { addDoc, collection, deleteDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "./user_auth";

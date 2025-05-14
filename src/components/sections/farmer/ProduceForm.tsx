@@ -11,7 +11,7 @@ import ImageUploadForm from './UploadImages';
 import { useState } from 'react';
 import { uploadProduce, uploadProduceImage } from '@/api/produce_upload';
 import toast from 'react-hot-toast';
-import { useUser } from '@/auth/context/UserProvider';
+import { useUser } from '@/context/UserProvider';
 
 export interface ImagePreview {
   name: string;

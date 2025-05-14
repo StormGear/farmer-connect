@@ -13,8 +13,6 @@ export type MenuItem = {
     image: string;
     description: string;
     price: number;
-    location: string;
-    farmer: string;
     };
 
 export const MenuContext = createContext<MenuContextType | undefined>(undefined);
@@ -44,8 +42,6 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
             image: item.images[0],
             description: item.produce_description,
             price: item.price,
-            location: item.location,
-            farmer: item.farmer,
           }
         ));
         setMenuItems(produceItemsArray ?? []);
