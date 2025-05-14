@@ -3,21 +3,7 @@ import Navigation from './Navigation';
 import ProductCard from './ProductCard'
 import { useMenu } from '@/context/MenuProvider';
 import { useEffect } from 'react';
-import { getAllProduceItems } from '@/api/produce_upload';
 import toast from 'react-hot-toast';
-
-// Mock data - replace with actual API call
-const mockProducts = [
-  {
-    id: '1',
-    name: 'Fresh Tomatoes',
-    price: 2.99,
-    location: 'Kumasi, Ghana',
-    image: '/tomatoes.jpg',
-    farmer: 'John Doe'
-  },
-  // Add more mock products...
-];
 
 const ProductView = () => {
   const { menuItems, getProduceMenuItems } = useMenu();

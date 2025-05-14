@@ -10,7 +10,7 @@ export type MenuContextType = {
 export type MenuItem = {
     id: string;
     name: string;
-    image: string;
+    images?: string[];
     description: string;
     price: number;
     };
@@ -39,7 +39,7 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
           {
             id: item.id,
             name: item.produce_name,
-            image: item.images[0],
+            images: item.images,
             description: item.produce_description,
             price: item.price,
           }
