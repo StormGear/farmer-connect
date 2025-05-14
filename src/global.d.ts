@@ -20,7 +20,10 @@ export interface User {
   export type CartContextType = {
     cartItems: CartItem[];
     setCartItems: React.Dispatch<React.SetStateAction<any[]>>;
-    addToCart: (item: any, newOptions: any) => Promise<any>;
+    addToCart: (item: CartItem) => Promise<{
+            success: boolean;
+            message: string,
+          }>;
     removeCartItem: (item: any) => Promise<any>;
     clearCart: (item: any) => Promise<any>;
     updateQuantity: (item: any, quantity: number) => Promise<any>;

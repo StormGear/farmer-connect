@@ -1,8 +1,9 @@
 import  { useState,  createContext, useContext, ReactNode } from "react";
 import axios from "axios";
-import { useUser } from "./UserProvider";
 import { CartContextType, CartItem, ProduceItem } from "@/global";
 import { getProduceItemsFromFirestore } from "@/api/produce_upload";
+import { addToCartInFirebase } from "@/api/cart_management";
+import { useUser } from "@/context/UserProvider";
 
 
 
@@ -57,36 +58,34 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addToCart = async (item: CartItem, newOptions: any) => {
+  // Add to the cart context, after successful db addition
+  const addToCart = async (item: CartItem) => {
     console.log('input item', item);
-    const cart_id = user?.id;
     try {
-      let cartitem_res;
-      let response;
-      console.log('newOptions', newOptions)
-      console.log('adding to cart')
-        response = await axios.post(`/api/cartitems/create-cartitem`, 
-          {
-            cart_id: cart_id,
-            menuitem_id: item.menuitem_id,
-            extra_toppings: newOptions
-          }
-        );
-        cartitem_res = await axios.get(`/api/cartitems/${cart_id}`)
-        console.log('cartitem_res', cartitem_res.data)
-        setCartItems((prevCart) => {
-        return [...prevCart, { ...item }];
-           }
-        );
+        const response = await addToCartInFirebase(item, user);
+        if (!response.success) {
+          console.error('Error adding cart item:', response.message);
+          return {
+            success: false,
+            message: `error adding cart item: ${response.message}`,
+          };
+        }
+        console.log('cart item added successfully');
+        // setCartItems
+        setCartItems((prevItems) => [...prevItems, item]);
+        console.log('cart items', cartItems);
+        // TODO: update the total cost
+        // setTotalCost((prevCost) => prevCost + item.price);
+        console.log('total cost', totalCost);
         return {
-          success: 'success',
-          message: response.data.cartitem_id
+          success: true,
+          message: `cart item added successfully`,
         }
     } catch (error) {
-      
+        console.error('Error adding cart item:', error);
         return {
-          error: 'error',
-          message:  "error.message"
+          success: false,
+          message:  `Error adding cart item: ${error}`,
         }
 
     }

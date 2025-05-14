@@ -1,10 +1,8 @@
-import { useUser } from "@/context/UserProvider";
-import { CartItem } from "@/global";
+import { CartItem, User } from "@/global";
 import { addDoc, collection, deleteDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "./user_auth";
 
-export const addToCart =  async (item: CartItem) => {
-    const { user } = useUser();
+export const addToCartInFirebase =  async (item: CartItem, user: User | null) => {
     console.log('input item', item);
     const cart_id = user?.id; // cart_id is the user id
     try {
@@ -26,8 +24,7 @@ export const addToCart =  async (item: CartItem) => {
     }
 };
 
-export const placeOrder = async (total_cost: number) => {
-    const { user } = useUser();
+export const placeOrder = async (total_cost: number, user: User) => {
     const userId = user?.id;
     try {
         const orderRef = collection(db, "orders");
@@ -50,8 +47,7 @@ export const placeOrder = async (total_cost: number) => {
     }
   }
 
-export const removeCartItem = async (item: CartItem) => {
-    const { user } = useUser();
+export const removeCartItem = async (item: CartItem, user: User) => {
     const cart_id = user?.id; // cart_id is the user id
     console.log('input item', item);
     try {

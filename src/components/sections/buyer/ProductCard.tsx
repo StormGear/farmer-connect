@@ -1,9 +1,13 @@
+import { useCart } from '@/context/CartProvider';
 import { MenuItem } from '@/context/MenuProvider';
+import { CartItem } from '@/global';
+import { Spinner } from '@radix-ui/themes';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
 
 interface ProductProps extends MenuItem {
-  onAddToCart: (productId: string) => void;
+  onAddToCart: (item: CartItem) => Promise<void>;
 }
 
 const ProductCard = ({ id, name, price, description, images = [], onAddToCart }: ProductProps) => {
@@ -11,6 +15,11 @@ const ProductCard = ({ id, name, price, description, images = [], onAddToCart }:
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<number | null>(null);
+  const [loadingState, setLoadingState] = useState({
+    loading: false,
+    success: false,
+  });
+  const { cartItems } = useCart();
   
   // Auto-rotate carousel
   useEffect(() => {
@@ -48,6 +57,27 @@ const ProductCard = ({ id, name, price, description, images = [], onAddToCart }:
   // Pause rotation when hovering over the image
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
+
+  const handleAddToCart = async () => {
+    try {
+    setLoadingState({ loading: true, success: false });
+    const cartItem: CartItem = {
+      cartitem_id: id,
+      menuitem_id: id,
+    };
+    await onAddToCart(cartItem);
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    toast.error("Error adding to cart: " + error);
+  } finally {
+    setLoadingState({ loading: false, success: true });
+    toast.success("Added to cart successfully");
+  }
+  };
+
+  const isMenuItemInCart = (id: string) => {
+    return cartItems.find((item) => item.menuitem_id === id);
+  }
 
   return (
     <motion.div
@@ -139,10 +169,19 @@ const ProductCard = ({ id, name, price, description, images = [], onAddToCart }:
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          onClick={() => onAddToCart(id)}
+          onClick={handleAddToCart}
           className="mt-4 w-full py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
         >
-          Add to Cart
+            {(() => {
+            switch (loadingState.success) {
+              case true:
+                return 'Go to Cart';
+              case false:
+                return  loadingState.loading ? <Spinner /> : isMenuItemInCart(id) ? 'Go to Cart' : 'Add to Cart';
+              default:
+                return  'Go to Cart';
+            }
+            })()}
         </motion.button>
       </div>
     </motion.div>

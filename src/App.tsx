@@ -16,6 +16,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import Fallback from "./components/ErrorBoundary";
 import MenuProvider from "@/context/MenuProvider";
 import CartProvider from "@/context/CartProvider";
+import Cart from "./components/sections/buyer/cart/Cart";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,14 @@ const App = () => (
                 <ProductView />
               </ProtectedRoute>
             } 
+          />
+          <Route 
+            path="/products/:id/cart" 
+            element={
+              <ProtectedRoute allowedRoles={['farmer', 'buyer']}>
+                <Cart />
+              </ProtectedRoute>
+            }
           />
         <Route path="*" element={<NotFound />} />
       </Routes>
