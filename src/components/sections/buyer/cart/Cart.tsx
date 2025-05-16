@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import CartItemCard from "./CartItemCard";
 import Navigation from "../Navigation";
 import { Transaction } from "@coinbase/onchainkit/transaction";
-import '@coinbase/onchainkit/styles.css'; 
+// import '@coinbase/onchainkit/styles.css'; 
 
 
 const Cart = () => {
