@@ -5,7 +5,11 @@
   "tsx": true,
   "tailwind": {
     "config": "",
+<<<<<<< HEAD
     "css": "src/App.css",
+=======
+    "css": "src/styles/globals.css",
+>>>>>>> refs/remotes/origin/main
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
@@ -18,4 +22,8 @@
     "hooks": "@/hooks"
   },
   "iconLibrary": "lucide"
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/origin/main
