@@ -66,7 +66,7 @@ const ProductView = () => {
     <Navigation />
     <div className="min-h-screen bg-gray-50 pt-20 px-4">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">
+        <h1 className="text-3xl font-bold text-gray-800 my-5">
           Available Produce</h1>
          <div className="flex items-center mb-6">
             <i className="fas fa-leaf text-4xl text-green-600 mr-2"></i>

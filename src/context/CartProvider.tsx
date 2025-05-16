@@ -29,9 +29,22 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         };
       }
 
-      console.log('cart items', response.cart);
-      // set cart
+      console.log('cart produce items', response.data);
+      // pack the produce items into an array
+      const cartproduceItemsArray = response.data?.map((item: any) => ({
+        id: item.id,
+        user_id: item.user_id,
+        produce_name: item.produce_name,
+        produce_description: item.produce_description,
+        price: item.price,
+        upload_date: item.upload_date,
+        images: item.images,
+      }));
+      setCart(cartproduceItemsArray ?? []);
+
       
+
+
       console.log('cart items got from firebase and saved in state', cart);
       return {
         success: true,

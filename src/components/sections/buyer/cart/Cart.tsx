@@ -11,14 +11,19 @@ import { useCart } from "@/context/CartProvider";
 import { useUser } from "@/context/UserProvider";
 import { Link } from "react-router-dom";
 import CartItemCard from "./CartItemCard";
+import Navigation from "../Navigation";
+import { Transaction } from "@coinbase/onchainkit/transaction";
+import '@coinbase/onchainkit/styles.css'; 
 
 
 const Cart = () => {
   // const {  cartItems, totalCost, setTotalCost, clearCart, setCartItems, placeOrder } = useContext(CartContext);
-  const { cartItems, totalCost, getCartItems, cart } = useCart();
+  const {  totalCost, getCartItems, cart } = useCart();
   const { user } = useUser();
   const [loadingStateForClearCart] = useState({ loading: false, error: '', success: '' });
   const [loadingState] = useState({ loading: false, error: '', success: '' });
+
+  
 
 
   useEffect(() => {
@@ -28,7 +33,7 @@ const Cart = () => {
         const userId = user?.id ?? "";
         const response = await getCartItems(userId);
         if (response.success) {
-          console.log("Fetched cart items successfully:", response.cart);
+          console.log("Fetched cart items successfully!!!");
         } else {
           console.error("Error fetching cart items:", response.message);
         }
@@ -38,7 +43,6 @@ const Cart = () => {
     };
 
   fetchCartItems();
-    return () => console.log("Cart unmounted");
   }, [])
 
   // const handleClearCart = async (item: CartItem) => {
@@ -88,20 +92,17 @@ const Cart = () => {
 
 
   return (
+    <>
+    <Navigation />
     <div className="p-4 mt-4">
-      <div className='flex flex-col'> 
-        <div className="flex items-center">
+        <h2 className="text-2xl font-bold !text-[#3b7d4a] mt-5">Your Cart</h2>
+         <div className="flex mt-5">
           <Link to={`/products/${user?.id}`} className="text-primary-color text-2xl font-bold">
             <IoArrowBackCircle className='text-primary-color text-2xl' />
           </Link>
-           <div className="flex items-center text-2xl font-bold !text-[#3b7d4a] ml-5">
-            <i className="fas fa-leaf !text-[#72b01d] !mr-2"></i> FarmConnect
-          </div>
+          
         </div>
-        <h2 className="text-2xl my-5 font-bold !text-[#3b7d4a]">Your Cart</h2>
-      </div>
-      
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <div className="flex flex-col justify-center items-center min-h-full">
         <div> <MdRemoveShoppingCart className="text-primary-color text-8xl my-10" /> </div>
         <p className="mb-4 text-secondary-color font-extrabold">Your cart is empty.</p>
@@ -126,19 +127,19 @@ const Cart = () => {
       </div>
       ) : (
         <>
-          <ul className="divide-y">
-            {cart.map((item, index) => {
-              console.log(`cart item at ${index}`, item)
-               return <CartItemCard key={item.id} produceItem={item} />
-            })}
-          </ul>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {cart.map((item, index) => {
+    console.log(`cart item at ${index}`, item)
+     return <CartItemCard key={item.id} produceItem={item} />
+  })}
+</div>
           <div className="mt-4">
             <p className="font-semibold">
               Total: GH₵ {totalCost}
             </p>
             <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
-              <button
-                // onClick={() => handleClearCart(user?.id)}
+              <div
                 className="flex items-center" 
               >
                 {
@@ -151,7 +152,7 @@ const Cart = () => {
                  </>
                 }
           
-              </button>
+              </div>
 
               <Link
                 to={`/products/${user?.id}`}
@@ -166,7 +167,7 @@ const Cart = () => {
               {/* <button
                 className="bg-secondary-color text-white px-4 py-2 my-2 rounded max-w-max"
               > */}
-                { loadingState.loading ? <Spinner /> : <PlaceOrderButton placeOrderHandler={() => console.log("Place Order")} />}
+                { loadingState.loading ? <Spinner /> : <PlaceOrderButton />}
               {/* </button> */}
             </div>
             <div className="flex justify-end">
@@ -178,11 +179,13 @@ const Cart = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 
 
-const PlaceOrderButton = ({ placeOrderHandler }: { placeOrderHandler: () => void }) => {
+const PlaceOrderButton = () => {
+    const calls: any[] = [];
   return (
     <div>
   <AlertDialog.Root>
@@ -191,6 +194,7 @@ const PlaceOrderButton = ({ placeOrderHandler }: { placeOrderHandler: () => void
            <p className="flex items-center">    
       <RadixButton color="green">
         <p className="font-bold">Place Order</p>
+
       <GiConfirmed className="text-white text-lg ml-2" />
       </RadixButton> </p>
   </Tooltip>
@@ -208,15 +212,15 @@ const PlaceOrderButton = ({ placeOrderHandler }: { placeOrderHandler: () => void
 				</RadixButton>
 			</AlertDialog.Cancel>
 			<AlertDialog.Action>
-				<RadixButton variant="solid" color="green" onClick={placeOrderHandler}>
+				{/* <RadixButton variant="solid" color="green" onClick={placeOrderHandler}>
 					Yes
-				</RadixButton>
+				</RadixButton> */}
+          <Transaction calls={calls} />
 			</AlertDialog.Action>
 		</Flex>
 	</AlertDialog.Content>
 </AlertDialog.Root>
-
-    </div>
+  </div>
   )
 }
 

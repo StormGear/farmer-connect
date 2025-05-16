@@ -1,10 +1,12 @@
 import { useCart } from '@/context/CartProvider';
 import { MenuItem } from '@/context/MenuProvider';
+import { useUser } from '@/context/UserProvider';
 import { CartItem } from '@/global';
 import { Spinner } from '@radix-ui/themes';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductProps extends MenuItem {
   onAddToCart: (item: CartItem) => Promise<void>;
@@ -19,7 +21,9 @@ const ProductCard = ({ id, name, price, description, images = [], onAddToCart }:
     loading: false,
     success: false,
   });
-  const { cartItems } = useCart();
+  const { cart } = useCart();
+  const navigate = useNavigate();
+  const { user } = useUser();
   
   // Auto-rotate carousel
   useEffect(() => {
@@ -60,22 +64,30 @@ const ProductCard = ({ id, name, price, description, images = [], onAddToCart }:
 
   const handleAddToCart = async () => {
     try {
-    setLoadingState({ loading: true, success: false });
-    const cartItem: CartItem = {
-      menuitem_id: id,
-    };
+      console.log(`isMenuItemInCart ${isMenuItemInCart(id)}`);
+    if (isMenuItemInCart(id)) {
+        navigate(`/products/${user?.id}/cart`)
+        return;
+      }
+      setLoadingState({ loading: true, success: false });
+      const cartItem: CartItem = {
+        menuitem_id: id,
+      };
     await onAddToCart(cartItem);
   } catch (error) {
     console.error("Error adding to cart:", error);
     toast.error("Error adding to cart: " + error);
   } finally {
     setLoadingState({ loading: false, success: true });
+    if (!isMenuItemInCart(id)) {
     toast.success("Added to cart successfully");
+    }
   }
   };
 
   const isMenuItemInCart = (id: string) => {
-    return cartItems.find((item) => item.menuitem_id === id);
+    const cartItem = cart.find((item) => item.id === id) as CartItem | undefined;
+    return cartItem !== undefined;
   }
 
   return (
@@ -177,7 +189,9 @@ const ProductCard = ({ id, name, price, description, images = [], onAddToCart }:
               case true:
                 return 'Go to Cart';
               case false:
-                return  loadingState.loading ? <Spinner /> : isMenuItemInCart(id) ? 'Go to Cart' : 'Add to Cart';
+                return  loadingState.loading ? <div className="flex items-center justify-center">
+                  <Spinner />
+                </div> : isMenuItemInCart(id) ? 'Go to Cart' : 'Add to Cart';
               default:
                 return  'Go to Cart';
             }

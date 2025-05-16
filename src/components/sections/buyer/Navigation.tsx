@@ -3,10 +3,11 @@ import LogoutButton from '../Logout';
 import { useUser } from '@/context/UserProvider';
 import toast from 'react-hot-toast';
 import { useCart } from '@/context/CartProvider';
+import ConnectWalletButton from '@/components/web3/ConnectWalletButton';
 
 const Navigation = () => {
   const {  setUser, user } = useUser();
-  const { cartItems } = useCart();
+  const { cart } = useCart();
 
   return (
     <header className="fixed w-full bg-white shadow-md z-50">
@@ -23,17 +24,19 @@ const Navigation = () => {
                 <div className="relative">
                   <i className="fas fa-shopping-cart text-xl "></i>
                   <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {cartItems.length}
+                    {cart.length}
                   </span>
                 </div>
               </Link>
-             
                 <LogoutButton logoutHandler={() => {
                   // Implement logout functionality
                   console.log('Logging out...');
                   setUser(null);
                   toast.success('Logged out successfully');
                 }} />
+                  <div>
+                <ConnectWalletButton />
+        </div>
             
       
 

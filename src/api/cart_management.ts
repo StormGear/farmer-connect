@@ -1,4 +1,4 @@
-import { CartItem, ProduceItem, User } from "@/global";
+import { CartItem, User } from "@/global";
 import { addDoc, collection, deleteDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "./user_auth";
 
@@ -31,7 +31,6 @@ export const getCartItemsFromFirestore = async (userId: string) => {
         const q = query(cartRef, where("cart_id", "==", userId));
         const querySnapshot = await getDocs(q);
         const cartItems: CartItem[] = [];
-        const cart : ProduceItem[] = [];
         // let total_cost = 0;
         querySnapshot.forEach((doc) => {
             console.log("cart item: ", doc.id, " => ", doc.data());
@@ -47,30 +46,20 @@ export const getCartItemsFromFirestore = async (userId: string) => {
         // find the document ids that match the menuitem_ids in the cart
         const menuitem_ids = cartItems.map((item) => item.menuitem_id);
         const querySnapshot2 = await getDocs(collectionRef);
-        querySnapshot2.forEach((doc) => {
-            const data = doc.data();
-            const itemId = doc.id;
-            // check if the itemId is in the menuitem_ids
-            if (menuitem_ids.includes(itemId)) {
-                console.log("produce item: ", itemId, " => ", data);
-                // pack the produce items into an array
-                const item: ProduceItem = {
-                    id: itemId,
-                    user_id: data.user_id,
-                    produce_name: data.produce_name,
-                    produce_description: data.produce_description,
-                    price: data.price,
-                    upload_date: data.upload_date,
-                    images: data.images,
-                };
-                cart.push(item);
-            }
-        });
+      
 
         return {
           success: true,
           message: `Cart items fetched successfully`,
-          cart: cart,
+          data: querySnapshot2.docs.map((doc) => {
+                 const itemId = doc.id;
+                    if (menuitem_ids.includes(itemId)) {
+                    return {
+                        id: doc.id,
+                        ...doc.data(),
+                    };
+                  }
+                }),
         }
     }
     catch (error) {

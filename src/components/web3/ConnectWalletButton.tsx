@@ -28,18 +28,14 @@ import {
 
 const ConnectWalletButton = () => {
   return (
-    // <div
-    //   className="bg-[#3b7d4a] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#72b01d] transition-colors"
-    // >
       <>
        <Wallet>
-            <ConnectWallet >
-              <Avatar />
+            <ConnectWallet>
+              <Avatar className="h-6 w-6" />
               <Name />
             </ConnectWallet>
-            <WalletDropdown >
+            <WalletDropdown>
               <Identity
-                // className="px-4 pt-3 pb-2"
                 hasCopyAddressOnClick
               >
                 <Avatar />
@@ -57,16 +53,7 @@ const ConnectWalletButton = () => {
               <WalletDropdownFundLink />
               <WalletDropdownDisconnect />
             </WalletDropdown>
-        </Wallet>
-    {/* <Wallet>
-      <ConnectWallet />
-      <WalletDropdown>
-        <WalletAdvancedWalletActions />
-        <WalletAdvancedAddressDetails />
-        <WalletAdvancedTransactionActions />
-        <WalletAdvancedTokenHoldings />
-      </WalletDropdown>
-    </Wallet> */}
+          </Wallet>
     </>
   );
 };
