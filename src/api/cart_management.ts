@@ -1,4 +1,4 @@
-import { CartItem, User } from "@/global";
+import { CartItem, ProduceItem, User } from "@/global";
 import { addDoc, collection, deleteDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "./user_auth";
 
@@ -20,6 +20,58 @@ export const addToCartInFirebase =  async (item: CartItem, user: User | null) =>
         return {
           success: false,
           message: `Error adding cart item: ${error}`,
+        }
+    }
+};
+
+export const getCartItemsFromFirestore = async (userId: string) => {
+ 
+    try {
+        const cartRef = collection(db, "cart");
+        const q = query(cartRef, where("cart_id", "==", userId));
+        const querySnapshot = await getDocs(q);
+        const cartItems: CartItem[] = [];
+        const cart : ProduceItem[] = [];
+        // let total_cost = 0;
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const item: CartItem = {
+                menuitem_id: data.menuitem_id,
+            };
+            cartItems.push(item);
+            // total_cost += 10; // Assuming each item costs 10
+        });
+        // pack the produce items into an array
+        const docRef = collection(db, "produce");
+        // run a  query to get the produce items given a list of ids
+        const q2 = query(docRef, where("id", "in", cartItems.map((item) => item.menuitem_id)));
+        const querySnapshot2 = await getDocs(q2);
+        querySnapshot2.docs.map((doc) => {
+            const data = doc.data();
+            // pack the produce items into an array
+            const item: ProduceItem = {
+                id: doc.id,
+                user_id: data.user_id,
+                produce_name: data.produce_name,
+                produce_description: data.produce_description,
+                price: data.price,
+                upload_date: data.upload_date,
+                images: data.images,
+            };
+            cart.push(item);
+        });
+
+        return {
+          success: true,
+          message: `Cart items fetched successfully`,
+          cart: cart,
+        }
+    }
+    catch (error) {
+        console.error("Error fetching cart items:", error);
+        return {
+          success: false,
+          message: `Error fetching cart items: ${error}`,
         }
     }
 };

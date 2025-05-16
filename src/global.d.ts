@@ -19,24 +19,25 @@ export interface User {
 
   export type CartContextType = {
     cartItems: CartItem[];
-    setCartItems: React.Dispatch<React.SetStateAction<any[]>>;
+    setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
     addToCart: (item: CartItem) => Promise<{
             success: boolean;
             message: string,
           }>;
     removeCartItem: (item: any) => Promise<any>;
     clearCart: (item: any) => Promise<any>;
-    updateQuantity: (item: any, quantity: number) => Promise<any>;
     totalCost: number;
     setTotalCost: React.Dispatch<React.SetStateAction<number>>;
     placeOrder: (userId: string, total_cost: number) => Promise<any>;
     getProduceItems: (userId: string) => Promise<any>;
     produceItems: ProduceItem[];
+    cart: ProduceItem[];
+    setCart: React.Dispatch<React.SetStateAction<ProduceItem[]>>;
+    getCartItems: (userId: string) => Promise<any>;
   };
 
 
-  export type CartItem = {
-    cartitem_id: string;
+export type CartItem = {
     menuitem_id: string;
 }
 

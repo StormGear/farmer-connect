@@ -1,9 +1,9 @@
 import  { useState,  createContext, useContext, ReactNode } from "react";
-import axios from "axios";
 import { CartContextType, CartItem, ProduceItem } from "@/global";
 import { getProduceItemsFromFirestore } from "@/api/produce_upload";
-import { addToCartInFirebase } from "@/api/cart_management";
+import { addToCartInFirebase, getCartItemsFromFirestore } from "@/api/cart_management";
 import { useUser } from "@/context/UserProvider";
+import { set } from "react-hook-form";
 
 
 
@@ -13,9 +13,41 @@ export const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<ProduceItem[]>([]);
   const [produceItems, setProduceItems] = useState<ProduceItem[]>([]);
   const [totalCost, setTotalCost] = useState(0);
   const { user } = useUser();
+
+
+  const getCartItems = async (userId: string) => {
+    try {
+      const response = await getCartItemsFromFirestore(userId);
+      console.log('response', response.cart)
+      if (!response.success) {
+        console.error('Error fetching cart items:', response.message);
+        return {
+          success: false,
+          message: `error fetching cart items: ${response.message}`,
+        };
+      }
+
+      
+      console.log('cart items', response.cart);
+      setCart(response.cart ?? []);
+
+      return {
+        success: true,
+        message: `cart items fetched successfully`,
+      };
+    
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+      return {
+        success: false,
+        message: `error fetching cart items: ${error}`,
+      };
+    }
+  }
 
   const getProduceItems = async (userId: string) => {
     try {
@@ -92,44 +124,22 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }
 
 
-const updateQuantity = async (item: CartItem, quantity: number) => {
-    console.log('input item', item);
-    try {
-      let response;
-      console.log(`updating the quantity for ${item.cartitem_id} from cart`)
-        response = await axios.put(`/api/cartitems/update-cartitem-quantity`, {
-          cartitem_id: item.cartitem_id,
-          quantity: quantity
-        });
-        return {
-          success: 'success',
-          quantity: response.data.quantity
-        }
-    } catch (error) {
- 
-        return {
-          error: 'error',
-          message:  "error.message"
-        }
 
-      
-    }   
-  }
 
   const placeOrder = async (userId : string, total_cost : number) => {
     console.log('user with Id',  userId);
     try {
-      let response;
-      console.log(`placing order for ${userId} at total cost of ${total_cost} from cart`)
+      // let response;
+      // console.log(`placing order for ${userId} at total cost of ${total_cost} from cart`)
 
-        response = await axios.put(`/api/orders/add-order`, {
-          user_id: userId,
-          total_amount: total_cost
-        });
-        return {
-          success: 'success',
-          quantity: response.data.order_id
-        }
+      //   response = await axios.put(`/api/orders/add-order`, {
+      //     user_id: userId,
+      //     total_amount: total_cost
+      //   });
+        // return {
+        //   success: 'success',
+        //   quantity: response.data.order_id
+        // }
     } catch (error) {
      
         return {
@@ -145,12 +155,12 @@ const updateQuantity = async (item: CartItem, quantity: number) => {
   const removeCartItem = async (item: CartItem) => {
     console.log('input item', item);
     try {
-      let response;
-        response = await axios.delete(`/api/cartitems/remove-cartitem/${item.cartitem_id}/${item.menuitem_id}`);
-        return {
-          success: 'success',
-          message: response.data.message
-        }
+      // let response;
+      //   response = await axios.delete(`/api/cartitems/remove-cartitem/${item.cartitem_id}/${item.menuitem_id}`);
+      //   return {
+      //     success: 'success',
+      //     message: response.data.message
+      //   }
     } catch (error) {
 
         return {
@@ -166,12 +176,12 @@ const updateQuantity = async (item: CartItem, quantity: number) => {
 
     try {
 
-      let response;
-        response = await axios.delete(`/api/cartitems/clear-cart/${item}`);
-        console.log('cartitem_res', response.data)
-        return {
-          success: 'success',
-        }
+      // let response;
+      //   response = await axios.delete(`/api/cartitems/clear-cart/${item}`);
+      //   console.log('cartitem_res', response.data)
+      //   return {
+      //     success: 'success',
+      //   }
     } catch (error) {
      
         return {
@@ -184,7 +194,7 @@ const updateQuantity = async (item: CartItem, quantity: number) => {
   };
 
   return (
-    <CartContext.Provider value={{  cartItems, setCartItems, addToCart, removeCartItem, clearCart, updateQuantity, totalCost, setTotalCost, placeOrder, getProduceItems, produceItems }}>
+    <CartContext.Provider value={{  cartItems, setCartItems, addToCart, removeCartItem, clearCart, totalCost, setTotalCost, placeOrder, getProduceItems, produceItems, cart, getCartItems, setCart }}>
       {children}
     </CartContext.Provider>
   );
