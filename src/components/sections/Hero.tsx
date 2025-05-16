@@ -1,10 +1,16 @@
 import ConnectWalletButton from "../web3/ConnectWalletButton";
-
-// import bgimage from "@/assets/market.jpeg"; // Ensure you have the correct path to your image
+import bgImage from "@/assets/trade.png"; // Import your background image
 
 const Hero = () => {
   return (
-    <section className="relative h-[80vh] flex items-center justify-center text-white">
+    <section 
+      className="relative h-[80vh] flex items-center justify-center text-white"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <div className="absolute inset-0 bg-black/50 z-10"></div>
       <div className="relative z-20 max-w-[800px] px-5 text-center">
         <h1 className="text-5xl md:text-6xl font-bold mb-4">Creating Value in the Agricultural Supply Chain</h1>

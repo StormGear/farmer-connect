@@ -43,15 +43,16 @@ const ConnectWalletButton = () => {
                 <Address />
                 <EthBalance />
               </Identity>
-              <WalletDropdownBasename />
+              <WalletDropdownBasename className='text-white' />
               <WalletDropdownLink
                 icon="wallet"
                 href="https://keys.coinbase.com"
+                className='text-sm text-white'
               >
                 Wallet
               </WalletDropdownLink>
-              <WalletDropdownFundLink />
-              <WalletDropdownDisconnect />
+              <WalletDropdownFundLink className='text-sm text-white' />
+              <WalletDropdownDisconnect className='text-sm text-white' />
             </WalletDropdown>
           </Wallet>
     </>

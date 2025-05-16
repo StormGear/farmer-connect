@@ -122,7 +122,7 @@ const DashboardStats = () => {
         <div className="p-4">
           <div className="flex justify-between items-start">
             <h3 className="text-lg font-medium text-gray-900 mb-1">{item.produce_name}</h3>
-            <p className="text-lg font-bold text-green-600">${item.price?.toFixed(2)}</p>
+            <p className="text-lg font-bold text-green-600">USDC{item.price?.toFixed(2)}</p>
           </div>
           
           <p className="text-sm text-gray-500 mb-4 line-clamp-2">

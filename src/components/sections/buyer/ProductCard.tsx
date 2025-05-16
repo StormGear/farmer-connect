@@ -176,7 +176,7 @@ const ProductCard = ({ id, name, price, description, images = [], onAddToCart }:
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
         <p className="text-gray-600 mt-2 line-clamp-2">{description}</p>
-        <p className="text-green-600 font-bold">${price.toFixed(2)}</p>
+        <p className="text-green-600 font-bold">USDC{price.toFixed(2)}</p>
         
         <motion.button
           whileHover={{ scale: 1.02 }}
