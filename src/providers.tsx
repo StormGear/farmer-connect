@@ -12,8 +12,7 @@ export function Providers(props: { children: ReactNode }) {
       chain={base} // add baseSepolia for testing 
       config={{
         appearance: {
-          name: 'eth',        // Displayed in modal header
-          logo: 'https://cdn.pixabay.com/photo/2021/05/24/09/15/ethereum-logo-6278329_1280.png',// Displayed in modal header
+          name: 'farmer-connect',        // Displayed in modal header
           mode: 'auto',                 // 'light' | 'dark' | 'auto'
           theme: 'default',             // 'default' or custom theme
         },
