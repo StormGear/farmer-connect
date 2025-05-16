@@ -21,7 +21,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const getCartItems = async (userId: string) => {
     try {
       const response = await getCartItemsFromFirestore(userId);
-      console.log('response', response.cart)
       if (!response.success) {
         console.error('Error fetching cart items:', response.message);
         return {
@@ -30,10 +29,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         };
       }
 
-      
       console.log('cart items', response.cart);
-      setCart(response.cart ?? []);
-
+      // set cart
+      
+      console.log('cart items got from firebase and saved in state', cart);
       return {
         success: true,
         message: `cart items fetched successfully`,

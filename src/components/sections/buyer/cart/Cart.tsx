@@ -15,7 +15,7 @@ import CartItemCard from "./CartItemCard";
 
 const Cart = () => {
   // const {  cartItems, totalCost, setTotalCost, clearCart, setCartItems, placeOrder } = useContext(CartContext);
-  const { cartItems, totalCost, getCartItems } = useCart();
+  const { cartItems, totalCost, getCartItems, cart } = useCart();
   const { user } = useUser();
   const [loadingStateForClearCart] = useState({ loading: false, error: '', success: '' });
   const [loadingState] = useState({ loading: false, error: '', success: '' });
@@ -28,8 +28,7 @@ const Cart = () => {
         const userId = user?.id ?? "";
         const response = await getCartItems(userId);
         if (response.success) {
-          console.log('cart items', response.cart);
-          // setTotalCost(response.total_cost);
+          console.log("Fetched cart items successfully:", response.cart);
         } else {
           console.error("Error fetching cart items:", response.message);
         }
@@ -128,13 +127,10 @@ const Cart = () => {
       ) : (
         <>
           <ul className="divide-y">
-            {cartItems.map((item, index) => {
+            {cart.map((item, index) => {
               console.log(`cart item at ${index}`, item)
-               return <CartItemCard key={item.menuitem_id} cartItem={item} />
-            }
-              
-            
-            )}
+               return <CartItemCard key={item.id} produceItem={item} />
+            })}
           </ul>
           <div className="mt-4">
             <p className="font-semibold">

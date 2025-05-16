@@ -34,6 +34,7 @@ export const getCartItemsFromFirestore = async (userId: string) => {
         const cart : ProduceItem[] = [];
         // let total_cost = 0;
         querySnapshot.forEach((doc) => {
+            console.log("cart item: ", doc.id, " => ", doc.data());
             const data = doc.data();
             const item: CartItem = {
                 menuitem_id: data.menuitem_id,
@@ -42,23 +43,28 @@ export const getCartItemsFromFirestore = async (userId: string) => {
             // total_cost += 10; // Assuming each item costs 10
         });
         // pack the produce items into an array
-        const docRef = collection(db, "produce");
-        // run a  query to get the produce items given a list of ids
-        const q2 = query(docRef, where("id", "in", cartItems.map((item) => item.menuitem_id)));
-        const querySnapshot2 = await getDocs(q2);
-        querySnapshot2.docs.map((doc) => {
+        const collectionRef = collection(db, "produce");
+        // find the document ids that match the menuitem_ids in the cart
+        const menuitem_ids = cartItems.map((item) => item.menuitem_id);
+        const querySnapshot2 = await getDocs(collectionRef);
+        querySnapshot2.forEach((doc) => {
             const data = doc.data();
-            // pack the produce items into an array
-            const item: ProduceItem = {
-                id: doc.id,
-                user_id: data.user_id,
-                produce_name: data.produce_name,
-                produce_description: data.produce_description,
-                price: data.price,
-                upload_date: data.upload_date,
-                images: data.images,
-            };
-            cart.push(item);
+            const itemId = doc.id;
+            // check if the itemId is in the menuitem_ids
+            if (menuitem_ids.includes(itemId)) {
+                console.log("produce item: ", itemId, " => ", data);
+                // pack the produce items into an array
+                const item: ProduceItem = {
+                    id: itemId,
+                    user_id: data.user_id,
+                    produce_name: data.produce_name,
+                    produce_description: data.produce_description,
+                    price: data.price,
+                    upload_date: data.upload_date,
+                    images: data.images,
+                };
+                cart.push(item);
+            }
         });
 
         return {
