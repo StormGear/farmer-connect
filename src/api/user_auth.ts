@@ -20,15 +20,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-<<<<<<< HEAD
-const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-const db = getFirestore(app);
-=======
 export const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 export const db = getFirestore(app);
->>>>>>> refs/remotes/origin/main
 
 
 export const addUser = async (user: SignupForm) => {
@@ -96,16 +90,12 @@ export const loginUser = async (loginDetails: LoginFormData) => {
       return {
         success: true,
         message: "User logged in successfully",
-<<<<<<< HEAD
-        data: docSnap.data(),
-=======
         data: {
           id: docSnap.id,
           email: data.email,
           name: data.name,
           role: data.role,
         }
->>>>>>> refs/remotes/origin/main
       }
     }
     else {

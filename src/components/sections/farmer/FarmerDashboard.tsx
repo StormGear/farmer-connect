@@ -2,14 +2,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import DashboardStats from './DashboardStats'
 import ProduceForm from './ProduceForm';
-<<<<<<< HEAD
-import { useUser } from '@/auth/context/UserProvider';
-import Repurpose from './Repurpose';
-
-const FarmerDashboard = () => {
-  const [activeTab, setActiveTab] = useState<'stats' | 'upload' | 'repurpose'>('stats');
-  const { user } = useUser();
-=======
 import { useUser } from '@/context/UserProvider';
 import Repurpose from './Repurpose';
 import LogoutButton from '../Logout';
@@ -20,7 +12,6 @@ const FarmerDashboard = () => {
   const [activeTab, setActiveTab] = useState<'stats' | 'upload' | 'repurpose'>('stats');
   const { user, setUser } = useUser();
   const navigate = useNavigate();
->>>>>>> refs/remotes/origin/main
 
   const renderContent = () => {
     switch (activeTab) {
@@ -44,12 +35,6 @@ const FarmerDashboard = () => {
     <div className="min-h-screen bg-gray-50">
       <div className="!max-w-7xl !mx-auto !px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-lg p-6">
-<<<<<<< HEAD
-          <div className="flex items-center mb-6">
-            <i className="fas fa-leaf text-4xl text-green-600 mr-2"></i>
-            <h1 className="text-3xl font-bold text-gray-800">Welcome back{ user?.name ? `,${userName}!` : '!'}</h1>
-          </div>
-=======
           <div className="flex items-center justify-between mb-6">
             <i className="fas fa-leaf text-4xl text-green-600 mr-2"></i>
             <h1 className="text-3xl font-bold text-gray-800">Welcome back{ user?.name ? `,${userName}!` : '!'}</h1>
@@ -66,7 +51,6 @@ const FarmerDashboard = () => {
             </div>
           </div>
            
->>>>>>> refs/remotes/origin/main
           {/* Tabs */}
           <div className="border-b border-gray-200 mb-6">
             <nav className="flex space-x-8" aria-label="Tabs">

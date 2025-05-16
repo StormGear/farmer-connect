@@ -2,11 +2,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
-<<<<<<< HEAD
-import UploadImages from './UploadImages';
-import waste from '@/assets/farm_produce.jpeg';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-=======
 import waste from '@/assets/waste.jpeg';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Label } from '@/components/ui/label';
@@ -22,53 +17,22 @@ export interface ImagePreview {
   name: string;
   url: string;
 }
->>>>>>> refs/remotes/origin/main
 
 
 const produceSchema = z.object({
   name: z.string().min(2, "Produce name must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   price: z.number().min(0.01, "Price must be greater than 0"),
-<<<<<<< HEAD
-  quantity: z.number().int().min(1, "Quantity must be at least 1"),
-  unit: z.enum(["kg", "lbs", "pieces"], {
-    required_error: "Please select a unit",
-  }),
-  category: z.enum(["vegetables", "fruits", "grains", "other"], {
-    required_error: "Please select a category",
-  }),
-  images: z.object({
-    images: z
-      .instanceof(FileList)
-      .refine((files) => files.length > 0, "At least one image is required")
-      .refine(
-        (files) => Array.from(files).every(file => file.type.startsWith('image/')),
-        "All files must be images"
-      )
-  })
-});
-
-type ProduceForm = z.infer<typeof produceSchema>;
-=======
 });
 
 type ProduceFormData = z.infer<typeof produceSchema>;
->>>>>>> refs/remotes/origin/main
+
 
 const ProduceUploadForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-<<<<<<< HEAD
-  } = useForm<ProduceForm>({
-    resolver: zodResolver(produceSchema),
-  });
-
-  const onSubmit = (data: ProduceForm) => {
-    console.log(data);
-    // Handle form submission here
-=======
     reset
   } = useForm<ProduceFormData>({
     resolver: zodResolver(produceSchema),
@@ -133,8 +97,6 @@ const ProduceUploadForm = () => {
 
   const onInvalid = (errors: any) => {
     console.log("Form errors:", errors);
-  
->>>>>>> refs/remotes/origin/main
   };
 
   return (
@@ -161,29 +123,20 @@ const ProduceUploadForm = () => {
         </motion.div>
       </div>
 
-<<<<<<< HEAD
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-=======
+
       <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-6">
->>>>>>> refs/remotes/origin/main
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="grid grid-cols-1 gap-6"
         >
           <div>
-<<<<<<< HEAD
-            <label className="block text-sm font-medium text-gray-700">
-              Produce Name
-            </label>
-            <input
-=======
+
             <Label className="block text-sm font-medium text-gray-700">
               Produce Name
             </Label>
             <Input
               placeholder="Enter produce name"
->>>>>>> refs/remotes/origin/main
               type="text"
               {...register("name")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:!border-green-500 focus:!ring-green-500"
@@ -193,12 +146,6 @@ const ProduceUploadForm = () => {
             )}
           </div>
           <div>
-<<<<<<< HEAD
-            <label className="block text-sm font-medium text-gray-700">
-              Description
-            </label>
-            <textarea
-=======
             <Label className="block text-sm font-medium text-gray-700">
               Description
             </Label>
@@ -206,7 +153,6 @@ const ProduceUploadForm = () => {
               placeholder="Enter produce description"
               multiline
               type="text"
->>>>>>> refs/remotes/origin/main
               {...register("description")}
               rows={4}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
@@ -217,16 +163,7 @@ const ProduceUploadForm = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-<<<<<<< HEAD
-              <label className="block text-sm font-medium text-gray-700">
-                Price
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                {...register("price", { valueAsNumber: true })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-=======
+
               <Label className="block text-sm font-medium text-gray-700">
                 Price
               </Label>
@@ -235,36 +172,12 @@ const ProduceUploadForm = () => {
                 placeholder="Enter price"
                 {...register("price", { valueAsNumber: true })}
                 className="mt-1 block w-md rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
->>>>>>> refs/remotes/origin/main
               />
               {errors.price && (
                 <p className="mt-1 text-sm text-red-600">{errors.price.message}</p>
               )}
             </div>
-<<<<<<< HEAD
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Quantity
-              </label>
-              <input
-                type="number"
-                {...register("quantity", { valueAsNumber: true })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-              />
-              {errors.quantity && (
-                <p className="mt-1 text-sm text-red-600">{errors.quantity.message}</p>
-              )}
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Images
-            </label>
-            <UploadImages />
-            {errors.images && (
-              <p className="mt-1 text-sm text-red-600">{errors.images.message}</p>
-            )}
-=======
+
            
           </div>
           <div>
@@ -274,24 +187,17 @@ const ProduceUploadForm = () => {
              <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-lg">
         <ImageUploadForm onSubmit={uploadImagesToFirestore} submit={submitImages} />
         </div>
-          
->>>>>>> refs/remotes/origin/main
-          </div>
+      </div>
       
           <div className="flex justify-center w-full">
               <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   type="submit"
-<<<<<<< HEAD
-                  className="w-md text-center flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-              >
-                 <UploadFileIcon/>  Upload Produce
-=======
                   className="w-md cursor-pointer text-center flex justify-center items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
                  <UploadFileIcon className='mr-2'/>  Upload Produce
->>>>>>> refs/remotes/origin/main
+
               </motion.button>
           </div>
       

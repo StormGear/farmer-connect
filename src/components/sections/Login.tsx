@@ -8,12 +8,8 @@ import { useState } from "react";
 import { Spinner } from "@radix-ui/themes";
 import toast from "react-hot-toast";
 import { loginUser } from "@/api/user_auth";
-<<<<<<< HEAD
-import { useUser } from "@/auth/context/UserProvider";
-=======
 import { useUser } from "@/context/UserProvider";
 
->>>>>>> refs/remotes/origin/main
 
 
 
@@ -66,19 +62,13 @@ const Login = () => {
         id: res.data.id,
       }
       setUser(user);
-<<<<<<< HEAD
-      navigate("/farmer/dashboard");
-=======
+
       navigate("/farmer/dashboard/"+user.id);
->>>>>>> refs/remotes/origin/main
     }
     else if (res.data?.role === "buyer") {
       toast.success('Welcome Buyer!', {
         position: "top-right",
       })
-<<<<<<< HEAD
-      navigate("/products");
-=======
       // set user state in context
       console.log("res.data", res.data)
       const user = {
@@ -89,7 +79,6 @@ const Login = () => {
       }
       setUser(user);
       navigate(`/products/${user.id}`);
->>>>>>> refs/remotes/origin/main
     } else {
       toast.error('Invalid role!', {
         position: "top-right",
@@ -219,10 +208,5 @@ const Login = () => {
   );
 };
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> refs/remotes/origin/main
 export default Login;
 

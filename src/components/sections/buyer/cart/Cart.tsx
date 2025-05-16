@@ -2,7 +2,6 @@ import  { useEffect, useState } from "react";;
 import { IoArrowBackCircle } from "react-icons/io5";
 import { GiConfirmed } from "react-icons/gi";
 import { MdRemoveShoppingCart } from "react-icons/md";
-import toast from 'react-hot-toast';
 import { IoFastFoodSharp } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { Button as RadixButton, Spinner } from '@radix-ui/themes' 
@@ -12,15 +11,14 @@ import { useCart } from "@/context/CartProvider";
 import { useUser } from "@/context/UserProvider";
 import { Link } from "react-router-dom";
 import CartItemCard from "./CartItemCard";
-import { CartItem, User } from "@/global";
 
 
 const Cart = () => {
   // const {  cartItems, totalCost, setTotalCost, clearCart, setCartItems, placeOrder } = useContext(CartContext);
-  const { cartItems, setCartItems, totalCost, setTotalCost, clearCart, placeOrder, getCartItems } = useCart();
+  const { cartItems, totalCost, getCartItems } = useCart();
   const { user } = useUser();
-  const [loadingStateForClearCart, setLoadingStateForClearCart] = useState({ loading: false, error: '', success: '' });
-  const [loadingState, setLoadingState] = useState({ loading: false, error: '', success: '' });
+  const [loadingStateForClearCart] = useState({ loading: false, error: '', success: '' });
+  const [loadingState] = useState({ loading: false, error: '', success: '' });
 
 
   useEffect(() => {
@@ -44,48 +42,48 @@ const Cart = () => {
     return () => console.log("Cart unmounted");
   }, [])
 
-  const handleClearCart = async (item: CartItem) => {
-    try {
-      // dispatchForClearCart({ type: 'LOADING' });
-      const response = await clearCart(item);
-      if (response.success) {
-        toast.success('Cart cleared successfully')
-        setCartItems([]);
-        setTotalCost(0);
+  // const handleClearCart = async (item: CartItem) => {
+  //   try {
+  //     setLoadingStateForClearCart({ loading: true, error: '', success: '' });
+  //     const response = await clearCart(item);
+  //     if (response.success) {
+  //       toast.success('Cart cleared successfully')
+  //       setCartItems([]);
+  //       setTotalCost(0);
         
-      } else {
-        // dispatchForClearCart({ type: 'ERROR', payload: response.message });
-        console.error("Error clearing cart:", response.message);
-        toast.error("Error clearing cart:", response.message)
-      }
-    } catch (error) {
-      // dispatchForClearCart({ type: 'ERROR', payload: error.message });
-      console.error("Error clearing cart:", error);
-      toast.error("Error clearing cart: " + error)
-    }
-  }
+  //     } else {
+  //       // dispatchForClearCart({ type: 'ERROR', payload: response.message });
+  //       console.error("Error clearing cart:", response.message);
+  //       toast.error("Error clearing cart:", response.message)
+  //     }
+  //   } catch (error) {
+  //     // dispatchForClearCart({ type: 'ERROR', payload: error.message });
+  //     console.error("Error clearing cart:", error);
+  //     toast.error("Error clearing cart: " + error)
+  //   }
+  // }
 
-  const handlePlaceOrder = async (user: User, total_cost: number) => {
-    try {
-      console.log(`Placing order for user with id  ${user?.id} and total amout ${total_cost}`)
-      // dispatch({ type: 'LOADING' });
+  // const handlePlaceOrder = async (user: User, total_cost: number) => {
+  //   try {
+  //     console.log(`Placing order for user with id  ${user?.id} and total amout ${total_cost}`)
+  //     setLoadingState({ loading: true, error: '', success: '' });
 
-      const response = await placeOrder(user?.id, total_cost);
-      if (response.success) {
-        setCartItems([]);
-        setTotalCost(0);
-        // dispatch({ type: 'SUCCESS' });
-        toast.success('Order placed successfully')
-      } else {
-        // dispatch({ type: 'ERROR', payload: response.message });
-        console.error("Error placing order response.message:", response.message);
-        toast.error("Error placing order response.message:", response.message)
-      }
-    } catch (error) {
-      console.error("Error placing order catch block:", error);
-      toast.error("Error placing order catch block: " + error)
-    }
-  }
+  //     const response = await placeOrder(user?.id, total_cost);
+  //     if (response.success) {
+  //       setCartItems([]);
+  //       setTotalCost(0);
+  //       // dispatch({ type: 'SUCCESS' });
+  //       toast.success('Order placed successfully')
+  //     } else {
+  //       // dispatch({ type: 'ERROR', payload: response.message });
+  //       console.error("Error placing order response.message:", response.message);
+  //       toast.error("Error placing order response.message:", response.message)
+  //     }
+  //   } catch (error) {
+  //     console.error("Error placing order catch block:", error);
+  //     toast.error("Error placing order catch block: " + error)
+  //   }
+  // }
 
 
 

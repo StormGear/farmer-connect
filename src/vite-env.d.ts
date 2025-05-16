@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-/// <reference types="vite/client" />
-=======
 declare module '*.jpeg' {
   const content: string;
   export default content;
@@ -21,4 +18,14 @@ declare module '*.css' {
   export default content;
 }
 
->>>>>>> refs/remotes/origin/main
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  VITE_FIREBASE_API_KEY: any;
+  readonly VITE_PUBLIC_ONCHAINKIT_API_KEY: string
+  readonly VITE_PROJECT_ID: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { User } from '../../global';
+import { User } from '@/global';
 import { UserContextType } from '@/global';
 
 

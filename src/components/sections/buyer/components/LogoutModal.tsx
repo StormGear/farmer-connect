@@ -1,9 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-<<<<<<< HEAD
-import { useUser } from '../../../../auth/context/UserProvider';
-=======
 import { useUser } from '@/context/UserProvider';
->>>>>>> refs/remotes/origin/main
 
 interface LogoutModalProps {
   isOpen: boolean;

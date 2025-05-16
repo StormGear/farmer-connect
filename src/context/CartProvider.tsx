@@ -3,7 +3,6 @@ import { CartContextType, CartItem, ProduceItem } from "@/global";
 import { getProduceItemsFromFirestore } from "@/api/produce_upload";
 import { addToCartInFirebase, getCartItemsFromFirestore } from "@/api/cart_management";
 import { useUser } from "@/context/UserProvider";
-import { set } from "react-hook-form";
 
 
 
@@ -126,7 +125,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
 
 
-  const placeOrder = async (userId : string, total_cost : number) => {
+  const placeOrder = async (userId : string) => {
     console.log('user with Id',  userId);
     try {
       // let response;
@@ -172,7 +171,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const clearCart = async (item: CartItem) => {
+  const clearCart = async () => {
 
     try {
 

@@ -1,10 +1,6 @@
 import { motion } from 'framer-motion';
 import produce from '@/assets/produce.svg';
 import dashboardImg from '@/assets/dashboard.png';
-<<<<<<< HEAD
-
-const DashboardStats = () => {
-=======
 import { useEffect } from 'react';
 import { useUser } from '@/context/UserProvider';
 import { useCart } from '@/context/CartProvider';
@@ -31,7 +27,7 @@ const DashboardStats = () => {
     fetchProduceItems();
   }, [user]);
 
->>>>>>> refs/remotes/origin/main
+
   return (
     <div className="space-y-6">
             <div className="bg-gradient-to-r from-green-100 to-green-50 rounded-xl p-6 mb-8">
@@ -94,18 +90,6 @@ const DashboardStats = () => {
         <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Produce</h3>
         <div className="bg-white shadow overflow-hidden rounded-lg">
           {/* Add your produce list table here */}
-<<<<<<< HEAD
-          { // display an empty state if no produce is available
-            <div className="p-6 text-center">
-              <div className="mt-4 flex flex-col items-center">
-                <p className="text-green-500 font-bold ">It looks like you haven't added any produce yet.</p>
-                <p className="text-green-500 font-bold">Add some produce to your listings!</p>
-                <p className="text-green-500 font-bold">Click the <span>Upload Produce</span> Tab to get started.</p>
-                <img src={produce} alt="Produce" className='mt-5 w-32 h-32 ' />
-              </div>
-            </div>
-          }
-=======
          {produceItems && produceItems.length > 0 ? (
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {produceItems.map((item, index) => (
@@ -167,7 +151,7 @@ const DashboardStats = () => {
 ) : (
   emptyProduce()
 )}
->>>>>>> refs/remotes/origin/main
+
          
         </div>
       </div>
@@ -175,9 +159,6 @@ const DashboardStats = () => {
   );
 };
 
-<<<<<<< HEAD
-export default DashboardStats;
-=======
 export default DashboardStats;
 
 function emptyProduce() {
@@ -190,4 +171,4 @@ function emptyProduce() {
     </div>
   </div>;
 }
->>>>>>> refs/remotes/origin/main
+

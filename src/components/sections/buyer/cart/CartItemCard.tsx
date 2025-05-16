@@ -7,9 +7,7 @@ interface CartItemProps {
     cartItem: CartItem;
 }
 
-const CartItemCard: React.FC<CartItemProps> = ({
-    cartItem,
-}) => {
+const CartItemCard: React.FC<CartItemProps> = () => {
 
 
     return (

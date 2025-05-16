@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/main
 export interface User {
     id: string;
     email: string;
@@ -18,9 +14,6 @@ export interface User {
 
   interface InputUser extends User {
     password: string;
-<<<<<<< HEAD
-  }
-=======
   }
 
   export type CartContextType = {
@@ -63,4 +56,3 @@ interface Produce {
     produce_description: string;
     price: number;
 }
->>>>>>> refs/remotes/origin/main
